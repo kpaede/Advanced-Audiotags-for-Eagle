@@ -15,7 +15,7 @@ TagLib-Wasm is maintained by Charles Wiltgen. TagLib is maintained by its contri
 
 ## Corresponding library source
 
-The [1.1.0 release](https://github.com/kpaede/Advanced-Audiotags-for-Eagle/releases/tag/v1.1.0) includes **taglib-corresponding-source-1.5.3.tar.gz**. It contains the exact upstream TagLib-Wasm source, its build recipes, the pinned TagLib/MPack submodules and TagLib’s pinned utf8cpp submodule. Sources have not been modified by this plugin. The source archive is offered alongside the binary without an additional charge.
+The [1.1.1 release](https://github.com/kpaede/Advanced-Audiotags-for-Eagle/releases/tag/v1.1.1) includes **taglib-corresponding-source-1.5.3.tar.gz**. It contains the exact upstream TagLib-Wasm source, its build recipes, the pinned TagLib/MPack submodules and TagLib’s pinned utf8cpp submodule. Sources have not been modified by this plugin. The source archive is offered alongside the binary without an additional charge.
 
 Canonical upstream sources:
 

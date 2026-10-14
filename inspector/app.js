@@ -358,6 +358,7 @@ if (typeof eagle === 'undefined') {
       pluginPath = plugin.path; backupDir = path.join(await eagle.app.getPath('userData'), 'Advanced Audiotags Backups');
       supportedExtensions = require(path.join(pluginPath, 'lib', 'formats.js')).EXTENSIONS;
       codec = require(path.join(pluginPath, 'lib', 'tag-codec.js')); store = require(path.join(pluginPath, 'lib', 'file-store.js'));
+      store.configureBackend({execPath: await eagle.app.getPath('exe')});
       applyTheme(await eagle.app.theme, inspectorTheme); wire(); await selection();
       timer = setInterval(() => { selection().catch(report); }, 1000);
     } catch (error) { report(error); }
@@ -365,5 +366,5 @@ if (typeof eagle === 'undefined') {
   eagle.onThemeChanged(theme => applyTheme(theme));
   eagle.onPluginShow(() => { selection().catch(report); });
   eagle.onLibraryChanged(() => { selection().catch(report); });
-  window.addEventListener('unload', () => clearInterval(timer));
+  window.addEventListener('unload', () => { clearInterval(timer); store?.closeBackend(); });
 }

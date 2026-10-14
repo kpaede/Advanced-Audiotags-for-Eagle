@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.1
+
+- Fix the inspector startup error: Eagle’s renderer V8 platform cannot create Node Workers.
+- Run metadata parsing in a separate process using the Eagle executable supplied by the host API.
+- Use reference-preserving JSON IPC to avoid Electron 22 binary-serialization crashes.
+- Close background processes on inspector unload or idle timeout.
+- Add a real Electron renderer regression test covering the actual inspector, file store and Eagle subprocess, including real FLAC/Ogg/M4A saves.
+- Normalize packaged filenames so release downloads match checksum filenames.
+
 ## 1.1.0
 
 - Use English throughout the inspector, errors and repository documentation.

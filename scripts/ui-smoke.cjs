@@ -39,6 +39,7 @@ for (const [description, value] of [['PUBLISHER', 'Reprise'], ['RELEASE TYPE', '
 let sourceBytes = codecAPI.serialize(fixture); let saved = false;
 const selected = { id: 'ui-fixture', name: 'Evening Light', ext: 'mp3', filePath: '/test/Evening Light.mp3' };
 const storeAPI = {
+  configureBackend: options => { window.backendExecutable = options.execPath; }, closeBackend: () => {},
   hash: b => b.toString('hex'),
   load: async () => ({ doc: codecAPI.parse(sourceBytes, 'mp3'), sourceHash: sourceBytes.toString('hex') }),
   latestBackup: async () => saved ? '/test/backup.mp3' : null,
@@ -46,7 +47,7 @@ const storeAPI = {
 };
 window.require = name => name === 'fs' ? { promises: {} } : name === 'path' ? { join: (...p) => p.join('/'), resolve: s => s } : name.endsWith('tag-codec.js') ? codecAPI : name.endsWith('file-store.js') ? storeAPI : name.endsWith('formats.js') ? { EXTENSIONS: ['mp3','flac','ogg','wav'] } : mockRequire(name);
 window.eagle = {
-  app: { theme: 'Auto', getPath: async () => '/test' },
+  app: { theme: 'Auto', getPath: async name => name === 'exe' ? '/test/Eagle' : '/test' },
   item: { getSelected: async () => [selected] },
   onPluginCreate: callback => setTimeout(() => { window.initialURLTheme = document.documentElement.dataset.theme; callback({ path: '/plugin' }).catch(e => { window.bootError = e.message; }); }, 0),
   onThemeChanged: callback => { window.changeTheme = callback; }, onPluginShow: () => {}, onLibraryChanged: () => {},
@@ -61,7 +62,7 @@ function assert(condition, message) { if (!condition) throw new Error(message); 
 function input(el, value) { el.value = value; el.dispatchEvent(new Event('input', { bubbles: true })); }
 setTimeout(async () => {
   try {
-    assert(!window.bootError, window.bootError); assert(document.querySelectorAll('.row').length === 19, 'Initial tag rows');
+    assert(!window.bootError, window.bootError); assert(window.backendExecutable === '/test/Eagle', 'Use Eagle application executable for the metadata process'); assert(document.querySelectorAll('.row').length === 19, 'Initial tag rows');
     assert(window.initialURLTheme === 'gray', 'Native resolved gray theme applied from inspector URL');
     assert(document.documentElement.dataset.theme === 'gray', 'Eagle Auto preference must not override the resolved gray inspector theme');
     assert(getComputedStyle(document.body).backgroundColor === 'rgb(61, 62, 66)', 'Native Eagle gray inspector surface');

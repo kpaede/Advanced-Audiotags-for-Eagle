@@ -9,7 +9,7 @@ The compact Name/Value table follows foobar2000’s properties layout while usin
 ## Install
 
 1. Use Eagle 4 with the `item.replaceFile()` plugin API.
-2. Download **Advanced Audiotags.eagleplugin** from [Releases](https://github.com/kpaede/Advanced-Audiotags-for-Eagle/releases/latest) and open it in Eagle.
+2. Download **Advanced.Audiotags.eagleplugin** from [Releases](https://github.com/kpaede/Advanced-Audiotags-for-Eagle/releases/latest) and open it in Eagle.
 3. Select one supported audio file. Expand **Advanced Audiotags** in the right-hand inspector. Reload an existing development installation after updating.
 
 No FFmpeg installation, npm installation or internet connection is required to use the plugin. The libraries and WebAssembly binary are included. The plugin registers inspector associations; Eagle must also be able to import the file. It does not add columns to Eagle’s central list or grid.
@@ -69,9 +69,13 @@ Files are loaded into memory; the current limit is **512 MB**. Drafts are stored
 
 The binary ID3/FLAC backend preserves unsupported payloads and separate tag versions. The generic TagLib backend maps text properties and can normalize tag representation when writing; it does not promise byte-for-byte metadata preservation. Extended ID3 restrictions and unknown structures may make a section read-only. Leading APE, Lyrics3 and appended ID3 without a footer are not independently modeled. See the [standards audit](docs/STANDARDS-AUDIT.md) for decisions and remaining limitations.
 
+## Renderer compatibility
+
+Version 1.1.1 fixes a startup failure in 1.1.0: Eagle’s renderer cannot create Node Worker threads, even though Workers run in the standalone Node mode of the same executable. The inspector now obtains the main executable through `eagle.app.getPath('exe')` and starts its metadata subprocess with `ELECTRON_RUN_AS_NODE=1`. JSON IPC preserves shared metadata entries and binary buffers without Electron 22’s advanced-serialization failure. The subprocess closes on inspector unload and after an idle timeout.
+
 ## Development and verification
 
-Use Node.js **22.6 or newer** to build/install dependencies. The distributed CommonJS bundles target **Node 16**, and buffer-based reads/writes have also been checked in Eagle’s embedded Node 16.17.1 runtime. No native Node add-on is required. Parsing and WebAssembly run in a Node worker so the inspector retains its strict Content Security Policy and remains responsive.
+Use Node.js **22.6 or newer** to build/install dependencies. The distributed CommonJS bundles target **Node 16**, and buffer-based reads/writes have also been checked in Eagle’s embedded Node 16.17.1 runtime. No native Node add-on is required. Parsing and WebAssembly run in a separate Node process using Eagle’s executable so the inspector retains its strict Content Security Policy and remains responsive.
 
 ```sh
 npm ci --ignore-scripts
@@ -90,6 +94,8 @@ FFMPEG_PATH=/path/to/ffmpeg FFPROBE_PATH=/path/to/ffprobe npm test
 `node scripts/ui-smoke.cjs` checks the actual inspector in headless Chrome with mocked Eagle file APIs: compact rows, English controls, custom-name drafts, save, sidebar width and all native themes. It uses the macOS Eagle/Chrome installation by default; override `EAGLE_ASAR` and `CHROME_PATH` as needed. A browser mock does not replace a final manual test inside Eagle.
 
 For the additional upstream reference-file tests, set `TAGLIB_TEST_DATA` to the `tests/data` directory in the corresponding TagLib source archive. `scripts/eagle-runtime-smoke.cjs` performs buffer-based read/write checks using the same optional reference directory and generated fixtures. See [validation](docs/VALIDATION.md).
+
+`npm run test:renderer` runs the actual inspector in an isolated Electron renderer, with the real file store and Eagle backend subprocess. Set `ELECTRON_TEST_PATH` to an Electron executable, `AUDIO_TEST_FIXTURES` to generated fixtures, and optionally `EAGLE_EXEC_PATH` to Eagle’s main executable. This test reproduces the Worker limitation and checks real FLAC/Ogg/M4A saves through the UI.
 
 ## Third-party software
 

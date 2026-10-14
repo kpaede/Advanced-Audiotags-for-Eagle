@@ -10,7 +10,7 @@ files = ["manifest.json", "logo.png", "README.md", "CHANGELOG.md", "THIRD-PARTY-
 for folder in ["lib", "inspector", "vendor", "third-party", "docs"]:
     files += [str(p.relative_to(root)) for p in sorted((root / folder).rglob("*")) if p.is_file() and p.name != ".DS_Store"]
 assert "vendor/taglib.wasm" in files and "vendor/metadata.cjs" in files
-out = root / "release" / (manifest["name"] + ".eagleplugin")
+out = root / "release" / (manifest["name"].replace(" ", ".") + ".eagleplugin")
 out.parent.mkdir(exist_ok=True)
 with ZipFile(out, "w", compression=ZIP_DEFLATED, compresslevel=9) as archive:
     for name in files:

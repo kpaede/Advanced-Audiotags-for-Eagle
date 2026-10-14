@@ -1,6 +1,6 @@
 {
   "name": "advanced-audiotags",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "Offline audio metadata inspector for Eagle",
   "scripts": {
@@ -8,7 +8,8 @@
     "check": "node scripts/check.cjs",
     "build": "node scripts/build-vendor.cjs",
     "package": "python3 scripts/package.py",
-    "test:ui": "node scripts/ui-smoke.cjs"
+    "test:ui": "node scripts/ui-smoke.cjs",
+    "test:renderer": "node scripts/renderer-smoke.cjs"
   },
   "engines": {
     "node": ">=22.6.0"

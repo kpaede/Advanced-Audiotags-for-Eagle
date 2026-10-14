@@ -1,0 +1,23 @@
+{
+  "name": "advanced-audiotags",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Offline audio metadata inspector for Eagle",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "check": "node scripts/check.cjs",
+    "build": "node scripts/build-vendor.cjs",
+    "package": "python3 scripts/package.py",
+    "test:ui": "node scripts/ui-smoke.cjs"
+  },
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "dependencies": {
+    "music-metadata": "12.2.1",
+    "taglib-wasm": "1.5.3"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

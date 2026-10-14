@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+*.log
+release/
+# Unused files from the original ICNS plugin template.
+js/
+viewer/
+thumbnail/
+test.icns

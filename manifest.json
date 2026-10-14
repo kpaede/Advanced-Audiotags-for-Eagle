@@ -1,0 +1,30 @@
+{
+  "id": "81444427-8ad5-49bc-90db-aa758a728afe",
+  "version": "1.1.0",
+  "platform": "all",
+  "arch": "all",
+  "name": "Advanced Audiotags",
+  "logo": "/logo.png",
+  "keywords": [
+    "audio",
+    "metadata",
+    "ID3",
+    "Vorbis",
+    "MP3",
+    "FLAC",
+    "WAV",
+    "MP4",
+    "Opus",
+    "inspector"
+  ],
+  "devTools": false,
+  "preview": {
+    "mp3,mp2,mp1,m2a,aac,ac3,eac3,ec3,flac,ogg,oga,opus,spx,wav,wave,bwf,aif,aiff,aifc,m4a,m4b,m4r,3gp,m4p,mp4,alac,wma,asf,ape,wv,wvp,mpc,mpp,mp+,tta,dsf,dff,mka,mkv,webm,caf,caff,shn": {
+      "inspector": {
+        "path": "inspector/index.html",
+        "height": 600,
+        "multiSelect": false
+      }
+    }
+  }
+}

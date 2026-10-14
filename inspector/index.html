@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self'; object-src 'none'; connect-src 'none'">
+  <title>Advanced Audiotags</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="heading"><div id="filename" class="filename">Select an audio file</div><span id="format" class="badge">…</span></div>
+    <div class="tabs" role="tablist" aria-label="Audio information"><button id="metadata-tab" role="tab" aria-selected="true" aria-controls="tags">Metadata</button><button id="properties-tab" role="tab" aria-selected="false" aria-controls="tags">Properties</button></div>
+    <input id="search" type="search" placeholder="Filter tags …" aria-label="Search tags">
+  </header>
+  <main id="tags" aria-label="Audio metadata"><p class="empty">Loading metadata …</p></main>
+  <section id="add-form" class="add-form" hidden>
+    <label>Container<select id="container"></select></label>
+    <label>Field name / frame ID<input id="new-key" list="suggestions" placeholder="e.g. TIT2 or ARTIST"><datalist id="suggestions"></datalist></label>
+    <label>Format<select id="new-kind"><option value="text">Text</option><option value="hex">Binary (hex)</option></select></label>
+    <label>Value<textarea id="new-value" rows="2"></textarea></label>
+    <div class="toolbar"><button id="confirm-add">Add</button><button id="cancel-add">Cancel</button></div>
+  </section>
+  <footer>
+    <p id="status" role="status" aria-live="polite">Ready</p>
+    <section id="tools-menu" class="tools-menu" hidden aria-label="Tools">
+      <div class="toolbar"><button id="add" disabled>+ Tag</button><button id="add-cover" disabled>+ Cover</button><button id="reload">Reload</button><button id="restore" disabled title="Restore latest backup">Backup</button></div>
+      <div id="field-tools"><p class="hint">Select a field to rename, edit or export it.</p></div>
+      <details class="help"><summary>Help & backups</summary><p>Edit values directly. Custom names can be edited in the Name column. Right-click a row or open Tools for more actions. ␀ represents a NUL character; it separates text values in ID3v2.4 and APE, not in every tag format.</p><p>Saving creates a backup and verifies that audio bytes remain unchanged. Backups are stored in “Advanced Audiotags Backups” in Eagle’s application data.</p><p>Raw AC3 has no standard descriptive tagging scheme. Some players ignore or reject ID3/APE tags in AC3.</p><button id="backup-folder">Open backup folder</button></details>
+    </section>
+    <div class="footer-buttons"><button id="tools-toggle" aria-expanded="false" aria-controls="tools-menu">Tools ▾</button><div class="toolbar"><button id="undo" disabled>Discard</button><button id="save" class="primary" disabled>Save</button></div></div>
+  </footer>
+  <script src="../lib/eagle-theme.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
